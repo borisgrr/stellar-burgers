@@ -1,4 +1,4 @@
-import { getOrdersApi } from '@api';
+import { getOrderByNumberApi, getOrdersApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
@@ -14,9 +14,11 @@ const initialState: OrdersState = {
   error: null
 };
 
-export const fetchOrders = createAsyncThunk(
-  'orders/fetchOrders',
-  async () => await getOrdersApi()
+export const fetchOrders = createAsyncThunk('orders/fetchOrders', getOrdersApi);
+
+export const getOrderByNumber = createAsyncThunk(
+  'orders/getOrderByNumber',
+  getOrderByNumberApi
 );
 
 const ordersSlice = createSlice({
@@ -28,14 +30,43 @@ const ordersSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     });
+
     builder.addCase(fetchOrders.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
       state.orders = action.payload;
     });
+
     builder.addCase(fetchOrders.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? 'Ошибка загрузки заказов';
+    });
+
+    builder.addCase(getOrderByNumber.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+
+    builder.addCase(getOrderByNumber.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+
+      const order = action.payload.orders[0];
+
+      if (order) {
+        const exists = state.orders.some(
+          (item) => item.number === order.number
+        );
+
+        if (!exists) {
+          state.orders.push(order);
+        }
+      }
+    });
+
+    builder.addCase(getOrderByNumber.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? 'Ошибка загрузки заказа';
     });
   }
 });

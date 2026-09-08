@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from '../../services/store';
 import { fetchBurgerConstructor } from '../../slices/burgerConstructor/burgerConstructorSlice';
 import { closeOrderModal as closeOrderModalAction } from '../../slices/burgerConstructor/burgerConstructorSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { fetchFeed } from '../../slices/feed/feedSlice';
 
 export const BurgerConstructor: FC = () => {
   const burgerConstructorItems = useSelector(
@@ -37,11 +36,7 @@ export const BurgerConstructor: FC = () => {
       return;
     }
 
-    dispatch(fetchBurgerConstructor())
-      .unwrap()
-      .then(() => {
-        dispatch(fetchFeed());
-      });
+    dispatch(fetchBurgerConstructor());
   };
 
   const closeOrderModal = () => {

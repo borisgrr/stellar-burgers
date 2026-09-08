@@ -102,40 +102,40 @@ const userSlice = createSlice({
     // LOGIN
     builder.addCase(loginUser.pending, (state) => {
       state.isLoading = true;
-      state.isAuthChecked = false;
+
       state.error = null;
     });
 
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.isLoading = false;
-      state.isAuthChecked = true;
+
       state.error = null;
     });
 
     builder.addCase(loginUser.rejected, (state, action) => {
       state.isLoading = false;
-      state.isAuthChecked = false;
+
       state.error = action.error.message ?? 'Ошибка авторизации';
     });
 
     // REGISTER
     builder.addCase(registerUser.pending, (state) => {
       state.isLoading = true;
-      state.isAuthChecked = false;
+
       state.error = null;
     });
 
     builder.addCase(registerUser.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.isLoading = false;
-      state.isAuthChecked = true;
+
       state.error = null;
     });
 
     builder.addCase(registerUser.rejected, (state, action) => {
       state.isLoading = false;
-      state.isAuthChecked = false;
+
       state.error = action.error.message ?? 'Ошибка регистрации';
     });
 
@@ -163,58 +163,58 @@ const userSlice = createSlice({
     // FORGOT PASSWORD
     builder.addCase(forgotPassword.pending, (state) => {
       state.isLoading = true;
-      state.isAuthChecked = false;
+
       state.error = null;
     });
 
     builder.addCase(forgotPassword.fulfilled, (state) => {
       state.isLoading = false;
-      state.isAuthChecked = true;
+
       state.error = null;
     });
 
     builder.addCase(forgotPassword.rejected, (state, action) => {
       state.isLoading = false;
-      state.isAuthChecked = false;
+
       state.error = action.error.message ?? 'Не удалось сбросить пароль';
     });
 
     // RESET PASSWORD
     builder.addCase(resetPassword.pending, (state) => {
       state.isLoading = true;
-      state.isAuthChecked = false;
+
       state.error = null;
     });
 
     builder.addCase(resetPassword.fulfilled, (state) => {
       state.isLoading = false;
-      state.isAuthChecked = true;
+
       state.error = null;
     });
 
     builder.addCase(resetPassword.rejected, (state, action) => {
       state.isLoading = false;
-      state.isAuthChecked = false;
+
       state.error = action.error.message ?? 'Не удалось сбросить пароль';
     });
 
     // UPDATE USER
     builder.addCase(updateUser.pending, (state) => {
       state.isLoading = true;
-      state.isAuthChecked = false;
+
       state.error = null;
     });
 
     builder.addCase(updateUser.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.isLoading = false;
-      state.isAuthChecked = true;
+
       state.error = null;
     });
 
     builder.addCase(updateUser.rejected, (state, action) => {
       state.isLoading = false;
-      state.isAuthChecked = false;
+
       state.error =
         action.error.message ?? 'Не удалось обновить данные пользователя';
     });
@@ -222,20 +222,20 @@ const userSlice = createSlice({
     // LOGOUT
     builder.addCase(logout.pending, (state) => {
       state.isLoading = true;
-      state.isAuthChecked = false;
+
       state.error = null;
     });
 
     builder.addCase(logout.fulfilled, (state) => {
       state.user = null;
       state.isLoading = false;
-      state.isAuthChecked = true;
+
       state.error = null;
     });
 
     builder.addCase(logout.rejected, (state, action) => {
       state.isLoading = false;
-      state.isAuthChecked = false;
+
       state.error = action.error.message ?? 'Не удалось выйти из аккаунта';
     });
   }
