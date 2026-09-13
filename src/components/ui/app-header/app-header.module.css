@@ -1,9 +1,11 @@
 .header {
   background-color: var(--background);
 }
+
 .menu {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   max-width: 1240px;
   height: 56px;
   margin: 0 auto;
@@ -11,13 +13,18 @@
 
 .menu_part_left {
   display: flex;
-  flex-basis: 35%;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
 }
 
 .link {
   display: flex;
+  align-items: center;
   text-decoration: none;
   color: var(--text-inactive-color);
+  padding: 16px 20px;
+  white-space: nowrap;
 }
 
 .link_active {
@@ -25,13 +32,13 @@
 }
 
 .link_position_last {
-  display: flex;
   justify-content: flex-end;
-  flex-basis: 35%;
+  flex: 1;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  margin: 0 auto;
+  justify-content: center;
+  flex: 1;
 }
