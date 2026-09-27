@@ -6,7 +6,7 @@ describe('ingredientsSlice', () => {
     const state = {
       ingredients: [],
       isLoading: false,
-      error: null
+      error: 'Ошибка'
     };
 
     const action = fetchIngredients.pending('some-request-id');
@@ -23,7 +23,7 @@ describe('ingredientsSlice', () => {
   test('Обрабатывает fulfilled', () => {
     const state = {
       ingredients: [],
-      isLoading: false,
+      isLoading: true,
       error: null
     };
 
@@ -57,11 +57,11 @@ describe('ingredientsSlice', () => {
   test('Обрабатывает rejected', () => {
     const state = {
       ingredients: [],
-      isLoading: false,
+      isLoading: true,
       error: null
     };
 
-    const error: Error = new Error('Ошибка загрузки ингредиентов');
+    const error = new Error('Сервер временно недоступен');
 
     const action = fetchIngredients.rejected(error, 'some-request-id');
 
@@ -70,7 +70,7 @@ describe('ingredientsSlice', () => {
     expect(result).toEqual({
       ingredients: [],
       isLoading: false,
-      error: action.error.message
+      error: 'Сервер временно недоступен'
     });
   });
 

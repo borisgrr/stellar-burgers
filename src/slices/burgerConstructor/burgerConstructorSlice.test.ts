@@ -20,7 +20,21 @@ describe('burgerConstructorSlice', () => {
           ingredients: []
         },
         orderRequest: false,
-        orderModalData: null
+        orderModalData: {
+          _id: '6ab80b1f6a172d001b995ded',
+          status: 'done',
+          name: 'Люминесцентный краторный бургер',
+          owner: {
+            createdAt: '2026-09-23T19:36:27.301Z',
+            email: 'boris1@mail.ru',
+            name: 'Борис',
+            updatedAt: '2026-09-23T19:36:27.301Z'
+          },
+          createdAt: '2026-09-26T18:12:47.403Z',
+          updatedAt: '2026-09-26T18:12:47.498Z',
+          number: 110654,
+          price: 3498
+        }
       };
 
       const action = fetchBurgerConstructor.pending('some-request-id');
@@ -38,12 +52,42 @@ describe('burgerConstructorSlice', () => {
     });
 
     test('Обрабатывает fulfilled', () => {
+      const bun: TIngredient = {
+        calories: 420,
+        carbohydrates: 53,
+        fat: 24,
+        image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+        image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+        image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
+        name: 'Краторная булка N-200i',
+        price: 1255,
+        proteins: 80,
+        type: 'bun',
+        _id: '643d69a5c3f7b9001cfa093c'
+      };
+
+      const ingredient: TConstructorIngredient = {
+        calories: 643,
+        carbohydrates: 85,
+        fat: 26,
+        image: 'https://code.s3.yandex.net/react/code/meat-03.png',
+        image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
+        image_mobile:
+          'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
+        name: 'Филе Люминесцентного тетраодонтимформа',
+        price: 988,
+        proteins: 44,
+        type: 'main',
+        id: 'abc',
+        _id: '643d69a5c3f7b9001cfa093e'
+      };
+
       const state: BurgerConstructorState = {
         constructorItems: {
-          bun: null,
-          ingredients: []
+          bun,
+          ingredients: [ingredient]
         },
-        orderRequest: false,
+        orderRequest: true,
         orderModalData: null
       };
 
@@ -90,11 +134,25 @@ describe('burgerConstructorSlice', () => {
           bun: null,
           ingredients: []
         },
-        orderRequest: false,
-        orderModalData: null
+        orderRequest: true,
+        orderModalData: {
+          _id: '6ab80b1f6a172d001b995ded',
+          status: 'done',
+          name: 'Люминесцентный краторный бургер',
+          owner: {
+            createdAt: '2026-09-23T19:36:27.301Z',
+            email: 'boris1@mail.ru',
+            name: 'Борис',
+            updatedAt: '2026-09-23T19:36:27.301Z'
+          },
+          createdAt: '2026-09-26T18:12:47.403Z',
+          updatedAt: '2026-09-26T18:12:47.498Z',
+          number: 110654,
+          price: 3498
+        }
       };
 
-      const error: Error = new Error('Ошибка заказа');
+      const error = new Error('Ошибка заказа');
 
       const action = fetchBurgerConstructor.rejected(error, 'some-request-id');
 
@@ -159,7 +217,7 @@ describe('burgerConstructorSlice', () => {
 
       expect(result).toEqual({
         constructorItems: {
-          bun: bun,
+          bun,
           ingredients: []
         },
         orderRequest: false,
@@ -247,7 +305,7 @@ describe('burgerConstructorSlice', () => {
     });
 
     test('Убирает ингредиент из конструктора', () => {
-      const ingredient: TConstructorIngredient = {
+      const firstIngredient: TConstructorIngredient = {
         calories: 643,
         carbohydrates: 85,
         fat: 26,
@@ -263,23 +321,39 @@ describe('burgerConstructorSlice', () => {
         _id: '643d69a5c3f7b9001cfa093e'
       };
 
+      const secondIngredient: TConstructorIngredient = {
+        calories: 4242,
+        carbohydrates: 242,
+        fat: 142,
+        image: 'https://code.s3.yandex.net/react/code/meat-01.png',
+        image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
+        image_mobile:
+          'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
+        name: 'Биокотлета из марсианской Магнолии',
+        price: 424,
+        proteins: 420,
+        type: 'main',
+        id: 'cba',
+        _id: '643d69a5c3f7b9001cfa0941'
+      };
+
       const state: BurgerConstructorState = {
         constructorItems: {
           bun: null,
-          ingredients: [ingredient]
+          ingredients: [firstIngredient, secondIngredient]
         },
         orderRequest: false,
         orderModalData: null
       };
 
-      const action = removeIngredient(ingredient);
+      const action = removeIngredient(firstIngredient);
 
       const result = reducer(state, action);
 
       expect(result).toEqual({
         constructorItems: {
           bun: null,
-          ingredients: []
+          ingredients: [secondIngredient]
         },
         orderRequest: false,
         orderModalData: null
@@ -404,7 +478,7 @@ describe('burgerConstructorSlice', () => {
       const firstIngredient: TConstructorIngredient = {
         calories: 643,
         carbohydrates: 85,
-        fat: 26,
+        fat: 24,
         image: 'https://code.s3.yandex.net/react/code/meat-03.png',
         image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
         image_mobile:
@@ -460,7 +534,7 @@ describe('burgerConstructorSlice', () => {
       const firstIngredient: TConstructorIngredient = {
         calories: 643,
         carbohydrates: 85,
-        fat: 26,
+        fat: 24,
         image: 'https://code.s3.yandex.net/react/code/meat-03.png',
         image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
         image_mobile:
